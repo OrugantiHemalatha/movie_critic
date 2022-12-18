@@ -12,52 +12,38 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.javapoint.entities.Movie;
 import com.javapoint.repository.MovieRepo;
-import com.javapoint.service.MovieServices;
-
-
+import com.javapoint.service.MovieService;
 @RestController
 @RequestMapping("/api")
 public class MovieController {
 	
-	
 	@Autowired
 	MovieRepo movieRepo;
-	
 	@Autowired
-	MovieServices movieServices;
-
-	
-	@PostMapping("/save/movieDetails")
+	MovieService movieServices;
+    @PostMapping("/save/movieDetails")
 	public Movie saveMovieDetails(@RequestBody Movie movie)
 	{
 	Movie movDetails=movieServices.saveMovieDetails(movie);
 		return movDetails;
 	}
-	
-	
 	@RequestMapping(method = RequestMethod.GET, path="/getAllMovieDetails")
 	public List<Movie>getAllMovieDetails()
 	{
 		List<Movie> movDetails=movieServices.getAllMovieDetails();
 		return movDetails;
 	}
-	
-	
 	@GetMapping("/getMovieDetailsById/{id}")
 	public Movie getMovieDetailsById(@PathVariable int id)
 	{
 		Movie movDetails=movieServices.getMovieDetailsById(id);
 		return movDetails;
 	}
-	
-	
 	@DeleteMapping("/deleteMovieById/{id}")
 	public void deleteRoleById(@PathVariable int id)
 	{
 	movieServices.deleteMovieById(id);
 	}
-	
-	
 	@PutMapping("/updateMovieDetails")
 	public Movie updateMovieDetails(@RequestBody Movie movie)
 	{

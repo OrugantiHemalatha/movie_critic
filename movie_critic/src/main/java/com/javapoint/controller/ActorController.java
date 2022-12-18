@@ -14,7 +14,8 @@ import com.javapoint.service.ActorService;
 
 @RestController
 @RequestMapping("/api")
-public class ActorController {
+public class ActorController 
+{
 	@Autowired
 	ActorService actorService;
 	@PostMapping("/save/ActorDetails")

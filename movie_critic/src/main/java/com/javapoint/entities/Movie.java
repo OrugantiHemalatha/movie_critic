@@ -17,6 +17,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity(name = "movie")
 @Table
 public class Movie {
@@ -26,32 +28,32 @@ public class Movie {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int movie_id;
 
-	@Column
+
 	private String movie_name;
 
-	@Column
 	private String movie_categories;
 
-	@Column
+
 	private String movie_language;
 
-	@Column
+
 	private String movie_genres;
 
-	@Column
+
 	private Date release_date;
 
-	@Column
+
 	private LocalTime movie_duration;
 
 	@Lob
 	@Column(columnDefinition = "MEDIUMBLOB")
 	private String movie_poster;
-
-	@OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
+	
+    @JsonManagedReference
+	@OneToMany(mappedBy = "movie", fetch = FetchType.EAGER,cascade=CascadeType.ALL)
 	private List<Review> review;
 
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "movie_actor", joinColumns = { @JoinColumn(name = "movie_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "actor_id") })
 	private Set<Actor> actor;
@@ -153,6 +155,9 @@ public class Movie {
 
 	public void setActor(Set<Actor> actor) {
 		this.actor = actor;
+	}
+	public Movie(int i, String string, String string2, String string3, String string4, int j, String string5,
+			String string6) {
 	}
 
 }

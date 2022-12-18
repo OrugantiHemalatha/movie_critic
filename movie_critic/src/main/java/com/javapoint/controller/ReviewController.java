@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.javapoint.entities.Review;
+import com.javapoint.repository.UserRepo;
+import com.javapoint.service.MovieService;
 import com.javapoint.service.ReviewService;
 @RestController
 @RequestMapping("/api")
@@ -18,12 +20,29 @@ public class ReviewController {
 	@Autowired
 	ReviewService reviewService;
 		
-	@PostMapping("/save/ReviewDetails")
-	public Review saveReviewDetails(@RequestBody Review review)
+	@Autowired
+    private MovieService movieService;
+
+    @Autowired
+    private UserRepo userRepo;
+		
+	@PostMapping("/save/ReviewDetails/{movie_id}/{user_id}")
+	 public Review addNewReview(@PathVariable(value = "movie_id") int movie_id,
+            @PathVariable(value = "user_id") int user_id, 
+            @RequestBody Review review) 
 	{
-		Review revDetails=reviewService.saveReviewDetails(review);
-		return revDetails;
-	}
+     try 
+     {
+            review.setMovie(movieService.getMovieDetailsById(movie_id));
+            review.setUser(userRepo.findById(user_id));
+            reviewService.saveReviewDetails(review);
+    } 
+    catch (Exception e) 
+    {
+            e.printStackTrace();
+    }
+    return review ;
+    }
 	@GetMapping("/getAllReviewDetails")
 	public List<Review>getAllReviewDetails()
 	{

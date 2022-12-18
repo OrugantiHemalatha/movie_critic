@@ -8,23 +8,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "actor")
 @Table
-public class Actor {
-
-	@Id
-	@SequenceGenerator(name = "actor_id_sequence", sequenceName = "actor_id_sequence", allocationSize = 1)
+public class Actor 
+{
+    @Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "actor_id_sequence")
 	@Column(name = "actor_id", updatable = false)
 	private int actor_id;
-
-	@Column
+	
 	private String actor_name;
 
-	@ManyToMany(mappedBy = "actor", fetch = FetchType.LAZY)
+	@JsonIgnore
+	@ManyToMany(mappedBy = "actor", fetch = FetchType.EAGER)
 	private Set<Movie> movie;
 
 	public Actor() {

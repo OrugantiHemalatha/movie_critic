@@ -1,6 +1,4 @@
 package com.javapoint.entities;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,6 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity(name = "review")
 @Table
 public class Review {
@@ -17,25 +16,20 @@ public class Review {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int review_id;
-
-	@Column(name = "movie_reviews", nullable = false)
-	private String movie_reviews;
-
-	@Column(name = "movie_ratings", nullable = false)
-	private double movie_ratings;
-
-	@Column(name = "content", updatable = false)
-	private String content;
-
-	@ManyToOne(fetch = FetchType.LAZY)
+    private String movie_reviews;
+    private double movie_ratings;
+    private String content;
+    
+    @JsonBackReference
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Movie movie;
-
-	@OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
 	private User user;
-
-	public Review() {
+    public Review() 
+    {
 		super();
-
+	}
+	public Review(int review_id, String movie_reviews, double movie_ratings, String content) {
 	}
 
 	public Review(int review_id, String movie_reviews, double movie_ratings, String content, Movie movie, User user) {

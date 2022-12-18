@@ -15,9 +15,7 @@ import com.javapoint.service.UserService;
 @RestController
 @RequestMapping("/api")
 public class UserController {
-
-	
-	@Autowired
+    @Autowired
 	UserService userService;
 	@PostMapping("/save/UserDetails") 
 	public User saveUserDetails(@RequestBody User user)
@@ -32,11 +30,11 @@ public class UserController {
 		return useDetails;
 	}
 	@GetMapping("/getUserDetailsById/{id}")
-public User getUserDetailsById(@PathVariable int id)
-{
+    public User getUserDetailsById(@PathVariable int id)
+    {
 		User useDetails=userService.getUserDetailsById(id);
 		return useDetails;
-}
+    }
 	@DeleteMapping("/deleteUserById/{id}")
 	public void deleteUserById(@PathVariable int id)
 	{
@@ -47,9 +45,11 @@ public User getUserDetailsById(@PathVariable int id)
 	{
 		return userService.updateUserDetails(user);
 	}
-	
-	 @DeleteMapping("/deleteUser") public void deleteUser(@RequestBody User user)
-	  { userService.deleteUser(user); }
+	@DeleteMapping("/deleteUser") 
+	public void deleteUser(@RequestBody User user)
+	{ 
+		userService.deleteUser(user); 
+	}
 }
 	
 	

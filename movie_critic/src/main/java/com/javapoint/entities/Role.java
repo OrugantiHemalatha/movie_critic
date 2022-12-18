@@ -1,27 +1,21 @@
 package com.javapoint.entities;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 @Entity
 @Table
-public class Role {
+public class Role 
+{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
-	@Column
 	private int role_id;
-	@Column
 	private String role_name;
-	
-	
-	
-	
+	public Role(int i,String string)
+	{
+	}
 	public Role(String role_name) {
 		super();
 		this.role_name = role_name;
@@ -41,10 +35,4 @@ public class Role {
 	public void setRole_name(String role_name) {
 		this.role_name = role_name;
 	}
-	
-	
-	
-
-	
-	
 }
